@@ -102,10 +102,12 @@ public class DemoService {
         } else {
             try {
                 CoinPO coinPo = new CoinPO();
+                Date now = new Date();
                 coinPo.setCurrency(req.getCurrency());
                 coinPo.setCurrencyChinese(req.getCurrencyChinese());
                 coinPo.setRate(req.getRate());
-                coinPo.setCreateTime(new Date());
+                coinPo.setCreateTime(now);
+                coinPo.setUpdateTime(now);
                 coinRepository.save(coinPo);
                 dm010201Res.setSaveResult(Y);
             } catch (Exception e) {
