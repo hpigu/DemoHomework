@@ -4,11 +4,11 @@ import com.example.demo.feign.CoinFeign;
 import com.example.demo.model.entity.CoinPO;
 import com.example.demo.model.feign.response.BasicCoin;
 import com.example.demo.model.feign.response.Bpi;
-import com.example.demo.model.response.dm010101.DM010101Res;
 import com.example.demo.model.repository.CoinRepository;
 import com.example.demo.model.request.dm010201.DM010201Req;
 import com.example.demo.model.request.dm010301.DM010301Req;
 import com.example.demo.model.request.dm010401.DM010401Req;
+import com.example.demo.model.response.dm010101.DM010101Res;
 import com.example.demo.model.response.dm010102.ConvertCoinDTO;
 import com.example.demo.model.response.dm010102.DM010102Res;
 import com.example.demo.model.response.dm010103.DM010103Res;
@@ -21,8 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,6 @@ public class DemoService {
 
     private static final String Y = "Y";
     private static final String N = "N";
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Autowired
     private CoinFeign coinFeign;
@@ -59,36 +57,19 @@ public class DemoService {
         DM010103Res dm010103Res = new DM010103Res();
         CoinPO coinPO = coinRepository.findByCurrency(currency);
         if(null != coinPO){
-            ConvertCoinDTO convertCoinDTO = ConvertCoinDTO.builder()
-                    .currency(coinPO.getCurrency())
-                    .currencyChinese(coinPO.getCurrencyChinese())
-                    .rate(coinPO.getRate())
-                    .updateTime(sdf.format(coinPO.getUpdateTime())).build();
-            dm010103Res.setCoin(convertCoinDTO);
+            dm010103Res.setCoin(new ConvertCoinDTO(coinPO));
         }
         return dm010103Res;
     }
 
     public DM010102Res queryCoinConvert() {
         DM010102Res dm010102Res = new DM010102Res();
-        List<ConvertCoinDTO> convertCoinDTOList = new ArrayList<>();
         DM010101Res coinRes = this.queryCoin();
         Bpi bpi = coinRes.getBpi();
-        List<BasicCoin> coinList = new ArrayList<>();
-        coinList.add(bpi.getUsd());
-        coinList.add(bpi.getEur());
-        coinList.add(bpi.getGbp());
-        List<String> codeList = coinList.stream().map(e -> e.getCode()).collect(Collectors.toList());
+        List<BasicCoin> coinList = Arrays.asList(bpi.getUsd(), bpi.getEur(), bpi.getGbp());
+        List<String> codeList = coinList.stream().map(BasicCoin::getCode).collect(Collectors.toList());
         List<CoinPO> coinPOList = coinRepository.findAllByCurrencyIn(codeList);
-        for (CoinPO coin : coinPOList) {
-            ConvertCoinDTO convertCoinDTO = ConvertCoinDTO.builder()
-                    .currency(coin.getCurrency())
-                    .currencyChinese(coin.getCurrencyChinese())
-                    .rate(coin.getRate())
-                    .updateTime(sdf.format(coin.getUpdateTime()))
-                    .build();
-            convertCoinDTOList.add(convertCoinDTO);
-        }
+        List<ConvertCoinDTO> convertCoinDTOList = coinPOList.stream().map(ConvertCoinDTO::new).collect(Collectors.toList());
         dm010102Res.setConvertCoinList(convertCoinDTOList);
         return dm010102Res;
     }
