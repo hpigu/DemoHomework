@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.feign.response.CoinRes;
+import com.example.demo.model.response.dm010101.DM010101Res;
 import com.example.demo.model.request.dm010201.DM010201Req;
 import com.example.demo.model.request.dm010301.DM010301Req;
 import com.example.demo.model.request.dm010401.DM010401Req;
@@ -21,7 +21,7 @@ public class DemoController {
     DemoService demoService;
 
     @GetMapping(value = "/DM010101", produces = MEDIA_TYPE)
-    public CoinRes dm010101() {
+    public DM010101Res dm010101() {
         return demoService.queryCoin();
     }
 

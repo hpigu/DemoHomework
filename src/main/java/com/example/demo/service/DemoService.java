@@ -4,7 +4,7 @@ import com.example.demo.feign.CoinFeign;
 import com.example.demo.model.entity.CoinPO;
 import com.example.demo.model.feign.response.BasicCoin;
 import com.example.demo.model.feign.response.Bpi;
-import com.example.demo.model.feign.response.CoinRes;
+import com.example.demo.model.response.dm010101.DM010101Res;
 import com.example.demo.model.repository.CoinRepository;
 import com.example.demo.model.request.dm010201.DM010201Req;
 import com.example.demo.model.request.dm010301.DM010301Req;
@@ -42,13 +42,13 @@ public class DemoService {
     @Autowired
     private CoinRepository coinRepository;
 
-    public CoinRes queryCoin() {
+    public DM010101Res queryCoin() {
         String coinRes = coinFeign.coin001();
         ObjectMapper om = new ObjectMapper();
-        CoinRes res = null;
+        DM010101Res res = null;
         try {
             Map coinMap = om.readValue(coinRes, Map.class);
-            res = om.convertValue(coinMap, CoinRes.class);
+            res = om.convertValue(coinMap, DM010101Res.class);
         } catch (JsonProcessingException e) {
             log.error("readValue failed ", e);
         }
@@ -72,7 +72,7 @@ public class DemoService {
     public DM010102Res queryCoinConvert() {
         DM010102Res dm010102Res = new DM010102Res();
         List<ConvertCoinDTO> convertCoinDTOList = new ArrayList<>();
-        CoinRes coinRes = this.queryCoin();
+        DM010101Res coinRes = this.queryCoin();
         Bpi bpi = coinRes.getBpi();
         List<BasicCoin> coinList = new ArrayList<>();
         coinList.add(bpi.getUsd());
