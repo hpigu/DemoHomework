@@ -4,7 +4,7 @@ MAINTAINER Daniel
 
 VOLUME /tmp
 
-ADD /target/demo-0.0.1-SNAPSHOT.jar springboot.jar
+ADD /target/cathayDemo-0.0.1-SNAPSHOT.jar springboot.jar
 
 RUN bash -c 'touch /springboot.jar'
 
