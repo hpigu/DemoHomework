@@ -41,6 +41,7 @@ public class DemoService {
     private CoinRepository coinRepository;
 
     public DM010101Res queryCoin() {
+
         String coinRes = coinFeign.coin001();
         ObjectMapper om = new ObjectMapper();
         DM010101Res res = null;
