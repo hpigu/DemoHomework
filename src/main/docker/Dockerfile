@@ -1,4 +1,4 @@
-FROM java:11
+FROM openjdk:11.0.14.1-oracle
 
 MAINTAINER Daniel
 
