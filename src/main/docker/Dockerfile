@@ -1,6 +1,6 @@
 FROM openjdk:11.0.14.1-oracle
 
-MAINTAINER Daniel
+MAINTAINER Daniel Huang
 
 VOLUME /tmp
 
