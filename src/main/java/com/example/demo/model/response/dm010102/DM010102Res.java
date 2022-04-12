@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class DM010102Res {
-    private List<ConvertCoinDTO> ConvertCoinList;
+    private List<ConvertCoinDTO> convertCoinList;
 }

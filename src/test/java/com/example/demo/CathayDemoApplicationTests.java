@@ -29,7 +29,7 @@ class CathayDemoApplicationTests {
 
     @Test
     @Order(1)
-    public void queryCoinDesk() throws Exception {
+    void queryCoinDesk() throws Exception {
         mockMvc.perform(get("/DM010101")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -39,7 +39,7 @@ class CathayDemoApplicationTests {
 
     @Test
     @Order(2)
-    public void queryCoinConvert() throws Exception {
+    void queryCoinConvert() throws Exception {
         mockMvc.perform(get("/DM010102")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -48,7 +48,7 @@ class CathayDemoApplicationTests {
 
     @Test
     @Order(3)
-    public void queryCoin() throws Exception {
+    void queryCoin() throws Exception {
         mockMvc.perform(get("/DM010103").param("currency","USD")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -57,7 +57,7 @@ class CathayDemoApplicationTests {
 
     @Test
     @Order(4)
-    public void insertCoin() throws Exception {
+    void insertCoin() throws Exception {
         DM010201Req dm010201Req = new DM010201Req();
         dm010201Req.setCurrency("NTD");
         dm010201Req.setRate(1511.45f);
@@ -72,7 +72,7 @@ class CathayDemoApplicationTests {
 
     @Test
     @Order(5)
-    public void updateCoin() throws Exception {
+    void updateCoin() throws Exception {
         DM010301Req dm010301Req = new DM010301Req();
         dm010301Req.setCurrency("USD");
         dm010301Req.setRate(42320.92f);
@@ -86,7 +86,7 @@ class CathayDemoApplicationTests {
 
     @Test
     @Order(6)
-    public void deleteCoin() throws Exception {
+    void deleteCoin() throws Exception {
         DM010401Req dm010401Req = new DM010401Req();
         dm010401Req.setCurrency("NTD");
         String content = objectMapper.writeValueAsString(dm010401Req);

@@ -46,7 +46,7 @@ public class DemoService {
         ObjectMapper om = new ObjectMapper();
         DM010101Res res = null;
         try {
-            Map coinMap = om.readValue(coinRes, Map.class);
+            Map<String,Object> coinMap = om.readValue(coinRes, Map.class);
             res = om.convertValue(coinMap, DM010101Res.class);
         } catch (JsonProcessingException e) {
             log.error("readValue failed ", e);

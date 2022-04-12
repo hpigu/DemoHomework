@@ -1,7 +1,6 @@
 package com.example.demo.model.response.dm010102;
 
 import com.example.demo.model.entity.CoinPO;
-import lombok.Builder;
 import lombok.Data;
 
 import java.text.SimpleDateFormat;
